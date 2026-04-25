@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getBlogBySlug } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +8,36 @@ import ImageGallery from "@/components/blog/ImageGallery";
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const blog = await getBlogBySlug(slug);
+    return {
+      title: blog.title,
+      description: blog.excerpt,
+      openGraph: {
+        title: blog.title,
+        description: blog.excerpt,
+        type: "article",
+        url: `/blog/${slug}`,
+        publishedTime: blog.publishedAt,
+        modifiedTime: blog.updatedAt,
+        ...(blog.coverImage && {
+          images: [{ url: blog.coverImage, alt: blog.title }],
+        }),
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: blog.title,
+        description: blog.excerpt,
+        ...(blog.coverImage && { images: [blog.coverImage] }),
+      },
+    };
+  } catch {
+    return { title: "ไม่พบบทความ" };
+  }
 }
 
 export default async function BlogDetailPage({ params }: Props) {

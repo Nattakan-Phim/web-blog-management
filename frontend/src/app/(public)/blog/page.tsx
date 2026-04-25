@@ -1,7 +1,19 @@
+import type { Metadata } from "next";
 import { getBlogs } from "@/lib/api";
 import BlogCard from "@/components/blog/BlogCard";
 import Pagination from "@/components/ui/Pagination";
 import SearchInput from "@/components/ui/SearchInput";
+
+export const metadata: Metadata = {
+  title: "บทความทั้งหมด",
+  description: "รวบรวมเรื่องราวและความรู้ที่น่าสนใจ",
+  openGraph: {
+    title: "บทความทั้งหมด",
+    description: "รวบรวมเรื่องราวและความรู้ที่น่าสนใจ",
+    type: "website",
+    url: "/blog",
+  },
+};
 
 interface Props {
   searchParams: Promise<{ page?: string; search?: string }>;
