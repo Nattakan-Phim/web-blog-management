@@ -56,7 +56,7 @@ comments
 - **slug**: auto-generate จาก title ถ้าไม่ระบุ, สามารถแก้ไขได้ใน admin
 - **viewCount**: increment ทุกครั้งที่ดูหน้า detail (ไม่สามารถแก้ไขได้ใน admin)
 - **publishedAt**: ใช้ createdAt เป็น publishedAt (ไม่สามารถแก้ไขได้ใน admin)
-- **Comment validation**: validate ทั้ง frontend (regex) และ backend (regex) — Thai Unicode range `[\u0E00-\u0E7F]` + digits
+- **Comment validation**: validate ทั้ง frontend (regex) และ backend (regex) — Thai script `[฀-๿]` + Thai punctuation `[๏-๛]` + ASCII digits + whitespace (`/^[฀-๿๏-๛0-9\s]+$/`)
 - **Image upload**: เก็บใน Cloudflare R2, max 6 รูปต่อ blog (ไม่นับรูปปก)
 - **Auth flow**: NextAuth เก็บ JWT token จาก backend ใน session, ส่งไปกับทุก admin request
 
@@ -150,7 +150,7 @@ Frontend จะรันที่ `http://localhost:3000`
 
 ## Assumptions / ข้อจำกัด
 
-- Comment validation: รองรับ Unicode Thai (`ก-๙`) + เลขอารบิก + เลขไทย + spacebar เท่านั้น
+- Comment validation: รองรับ Thai script (`฀-๿`) + Thai punctuation (`๏-๛`) + เลขอารบิก (0-9) + spacebar เท่านั้น (`/^[฀-๿๏-๛0-9\s]+$/`)
 - รูปปก ไม่นับใน 6 รูปเพิ่มเติม
 - `publishedAt` คือวันที่สร้าง blog ไม่ใช่วันที่ publish จริง (ตาม requirement ที่ระบุว่าแก้ไขไม่ได้)
 - ยังไม่ได้ implement: rich text editor (ใช้ textarea plain text แทน), real-time notifications
@@ -158,7 +158,6 @@ Frontend จะรันที่ `http://localhost:3000`
 ## ถ้ามีเวลาเพิ่ม
 
 - เพิ่ม Rich Text Editor (Tiptap หรือ Quill)
-- เพิ่ม pagination ใน admin tables
 - เพิ่ม image preview ก่อน upload
 - เพิ่ม toast notifications
 - เพิ่ม unit tests / e2e tests
