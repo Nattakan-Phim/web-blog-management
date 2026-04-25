@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { adminGetComments } from "@/lib/api";
 import { redirect } from "next/navigation";
 import CommentActions from "@/components/admin/CommentActions";
+import AdminPagination from "@/components/admin/AdminPagination";
 import Link from "next/link";
 
 interface Props {
@@ -83,9 +84,16 @@ export default async function AdminCommentsPage({ searchParams }: Props) {
         )}
       </div>
 
-      <div className="mt-4 text-sm text-gray-500">
-        แสดง {comments.length} จาก {meta.total} รายการ
+      <div className="mt-4 text-sm text-gray-500 text-center">
+        แสดง {comments.length} จาก {meta.total} รายการ · หน้า {meta.page}/{meta.totalPages}
       </div>
+
+      <AdminPagination
+        currentPage={meta.page}
+        totalPages={meta.totalPages}
+        basePath="/admin/comments"
+        extraParams={status ? { status } : undefined}
+      />
     </div>
   );
 }

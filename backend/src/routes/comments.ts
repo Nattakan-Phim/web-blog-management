@@ -7,8 +7,8 @@ import { authMiddleware } from "../middleware/auth.middleware";
 
 const VALID_STATUSES = new Set<CommentStatus>(["pending", "approved", "rejected"]);
 
-// Thai characters (full Unicode block) + Thai digits + ASCII digits + whitespace
-const THAI_MESSAGE_REGEX = /^[฀-๿0-9\s]+$/;
+// Thai script (U+0E00–U+0E7F) + Thai punctuation/digits (U+0E4F–U+0E5B) + ASCII digits + whitespace
+const THAI_MESSAGE_REGEX = /^[฀-๿๏-๛0-9\s]+$/;
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 

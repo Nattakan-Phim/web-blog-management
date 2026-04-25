@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { adminGetBlogs } from "@/lib/api";
 import Link from "next/link";
 import AdminBlogActions from "@/components/admin/AdminBlogActions";
+import AdminPagination from "@/components/admin/AdminPagination";
 import { redirect } from "next/navigation";
 
 interface Props {
@@ -134,10 +135,16 @@ export default async function AdminBlogsPage({ searchParams }: Props) {
       </div>
 
       {meta.total > 0 && (
-        <div className="mt-4 text-sm text-zinc-500">
+        <div className="mt-4 text-sm text-zinc-500 text-center">
           แสดง {blogs.length} จาก {meta.total} รายการ · หน้า {meta.page}/{meta.totalPages}
         </div>
       )}
+
+      <AdminPagination
+        currentPage={meta.page}
+        totalPages={meta.totalPages}
+        basePath="/admin/blogs"
+      />
     </div>
   );
 }

@@ -3,8 +3,8 @@ import { Comment } from "@/types";
 import { postComment } from "@/lib/api";
 import { useState } from "react";
 
-// Must match BE validation: full Thai Unicode block + digits + whitespace
-const THAI_AND_NUMBERS = /^[฀-๿0-9\s]+$/;
+// Must match BE validation: Thai script (U+0E00–U+0E7F) + Thai punctuation/digits (U+0E4F–U+0E5B) + ASCII digits + whitespace
+const THAI_AND_NUMBERS = /^[฀-๿๏-๛0-9\s]+$/;
 
 export default function CommentSection({ blogId, comments }: { blogId: string; comments: Comment[] }) {
   const [senderName, setSenderName] = useState("");
