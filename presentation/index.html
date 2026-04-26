@@ -63,7 +63,7 @@
       padding: 48px 64px;
       opacity: 0;
       transform: translateX(60px);
-      transition: opacity 0.45s ease, transform 0.45s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
       pointer-events: none;
     }
     .slide.active {
@@ -73,6 +73,10 @@
     }
     .slide.exit-left {
       opacity: 0;
+      transform: translateX(-60px);
+      pointer-events: none;
+    }
+    .slide.enter-from-left {
       transform: translateX(-60px);
     }
 
@@ -443,12 +447,12 @@
       transform: translateY(16px);
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    .slide.active .stagger > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay: 0.05s; }
-    .slide.active .stagger > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay: 0.15s; }
-    .slide.active .stagger > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay: 0.25s; }
-    .slide.active .stagger > *:nth-child(4) { opacity:1; transform:translateY(0); transition-delay: 0.35s; }
-    .slide.active .stagger > *:nth-child(5) { opacity:1; transform:translateY(0); transition-delay: 0.45s; }
-    .slide.active .stagger > *:nth-child(6) { opacity:1; transform:translateY(0); transition-delay: 0.55s; }
+    .slide.active.animating .stagger > *:nth-child(1) { opacity:1; transform:translateY(0); transition-delay: 0.08s; }
+    .slide.active.animating .stagger > *:nth-child(2) { opacity:1; transform:translateY(0); transition-delay: 0.18s; }
+    .slide.active.animating .stagger > *:nth-child(3) { opacity:1; transform:translateY(0); transition-delay: 0.28s; }
+    .slide.active.animating .stagger > *:nth-child(4) { opacity:1; transform:translateY(0); transition-delay: 0.38s; }
+    .slide.active.animating .stagger > *:nth-child(5) { opacity:1; transform:translateY(0); transition-delay: 0.48s; }
+    .slide.active.animating .stagger > *:nth-child(6) { opacity:1; transform:translateY(0); transition-delay: 0.58s; }
   </style>
 </head>
 <body>
@@ -461,7 +465,7 @@
          SLIDE 1 — Title / Overview
     ══════════════════════════════════ -->
     <div class="slide active" data-index="0">
-      <div class="stagger" style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:780px;">
+      <div class="stagger" style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:820px;">
         <div class="hero-badge">
           <span>⚙️</span> Software Development Process
         </div>
@@ -470,13 +474,29 @@
           <span class="gradient-text">Optimization</span>
         </h1>
         <p class="slide-subtitle">
-          แนวทางลดการทำงานซ้ำ เพิ่มความเร็วในการเริ่ม Project ใหม่<br/>
-          โดยยังคงรักษาคุณภาพและความ consistent ไว้ได้
+          เมื่อทีมดูแลหลาย Project ที่มี Feature และ UI คล้ายกัน<br/>
+          แต่ต้อง setup ใหม่ ตรวจสอบ Component และ Feature ซ้ำทุกครั้ง
         </p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:28px;">
           <span class="tag indigo">Shared Component Library</span>
           <span class="tag green">Design Token System</span>
           <span class="tag amber">Starter Kit</span>
+        </div>
+        <div style="display:flex;gap:32px;text-align:center;">
+          <div>
+            <div style="font-size:26px;font-weight:800;color:#a5b4fc;">2–3 วัน</div>
+            <div style="font-size:12px;color:#71717a;margin-top:2px;">setup Project ใหม่</div>
+          </div>
+          <div style="width:1px;background:#27272a;"></div>
+          <div>
+            <div style="font-size:26px;font-weight:800;color:#6ee7b7;">&lt; 1 ชั่วโมง</div>
+            <div style="font-size:12px;color:#71717a;margin-top:2px;">หลัง optimize</div>
+          </div>
+          <div style="width:1px;background:#27272a;"></div>
+          <div>
+            <div style="font-size:26px;font-weight:800;color:#fcd34d;">1 คำสั่ง</div>
+            <div style="font-size:12px;color:#71717a;margin-top:2px;">เริ่ม Project ใหม่</div>
+          </div>
         </div>
       </div>
     </div>
@@ -519,52 +539,89 @@
     </div>
 
     <!-- ══════════════════════════════════
-         SLIDE 3 — แนวทาง: Shared Library + Design Token
+         SLIDE 3 — แนวทาง: Before → After Diagram
     ══════════════════════════════════ -->
     <div class="slide" data-index="2">
-      <div class="stagger" style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:900px;">
+      <div class="stagger" style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:960px;">
         <div class="tag indigo">💡 แนวทางหลัก</div>
         <h2 class="slide-title" style="font-size:clamp(20px,2.8vw,36px);margin-bottom:6px;">
           Shared Component Library + Design Token
         </h2>
-        <p class="slide-subtitle" style="margin-bottom:24px;">
+        <p class="slide-subtitle" style="margin-bottom:20px;">
           แยก Component ออกเป็น package กลาง แต่ละ Project override แค่ Design Token
         </p>
 
-        <div class="diagram">
-          <div class="diagram-center-pkg">
-            <div class="pkg-title">📦 shared-ui (npm package)</div>
-            <div class="pkg-items">
-              <span class="pkg-chip">Button</span>
-              <span class="pkg-chip">Input</span>
-              <span class="pkg-chip">Table</span>
-              <span class="pkg-chip">Modal</span>
-              <span class="pkg-chip">Design Tokens</span>
-              <span class="pkg-chip">Unit Tests ✓</span>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;width:100%;">
+
+          <!-- BEFORE -->
+          <div style="background:#18181b;border:1px solid #3f3f46;border-radius:16px;padding:20px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#f87171;margin-bottom:14px;">❌ Before</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="background:#27272a;border:1px solid #ef444440;border-radius:10px;padding:12px 14px;">
+                <div style="font-size:13px;font-weight:600;color:#fca5a5;margin-bottom:6px;">Project A</div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <span style="background:#3f3f46;border-radius:4px;padding:2px 8px;font-size:11px;color:#a1a1aa;">Button.tsx</span>
+                  <span style="background:#3f3f46;border-radius:4px;padding:2px 8px;font-size:11px;color:#a1a1aa;">Input.tsx</span>
+                  <span style="background:#3f3f46;border-radius:4px;padding:2px 8px;font-size:11px;color:#a1a1aa;">colors.ts</span>
+                </div>
+              </div>
+              <div style="background:#27272a;border:1px solid #ef444440;border-radius:10px;padding:12px 14px;">
+                <div style="font-size:13px;font-weight:600;color:#fca5a5;margin-bottom:6px;">Project B <span style="font-size:10px;color:#71717a;">(copy จาก A)</span></div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <span style="background:#3f3f46;border-radius:4px;padding:2px 8px;font-size:11px;color:#a1a1aa;">Button.tsx</span>
+                  <span style="background:#3f3f46;border-radius:4px;padding:2px 8px;font-size:11px;color:#a1a1aa;">Input.tsx</span>
+                  <span style="background:#3f3f46;border-radius:4px;padding:2px 8px;font-size:11px;color:#a1a1aa;">colors.ts</span>
+                </div>
+              </div>
+              <div style="background:#27272a;border:1px solid #ef444440;border-radius:10px;padding:12px 14px;">
+                <div style="font-size:13px;font-weight:600;color:#fca5a5;margin-bottom:6px;">Project C <span style="font-size:10px;color:#71717a;">(copy จาก B)</span></div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <span style="background:#3f3f46;border-radius:4px;padding:2px 8px;font-size:11px;color:#a1a1aa;">Button.tsx</span>
+                  <span style="background:#3f3f46;border-radius:4px;padding:2px 8px;font-size:11px;color:#a1a1aa;">Input.tsx</span>
+                  <span style="background:#3f3f46;border-radius:4px;padding:2px 8px;font-size:11px;color:#71717a;text-decoration:line-through;">colors.ts?</span>
+                </div>
+              </div>
+              <div style="font-size:11px;color:#f87171;text-align:center;margin-top:4px;">bug fix = แก้ 3 ที่แยกกัน ⚠️</div>
             </div>
           </div>
 
-          <div class="diagram-arrow down">↓ &nbsp; install &amp; override token &nbsp; ↓</div>
-
-          <div class="diagram-row">
-            <div class="diagram-box green">
-              Project A<br/>
-              <small>token: primary = 🔵 blue</small>
-            </div>
-            <div class="diagram-box green">
-              Project B<br/>
-              <small>token: primary = 🟢 green</small>
-            </div>
-            <div class="diagram-box green">
-              Project C<br/>
-              <small>token: primary = 🟣 purple</small>
-            </div>
+          <!-- ARROW -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;color:#6366f1;font-size:22px;font-weight:700;">
+            →
+            <span style="font-size:10px;color:#71717a;white-space:nowrap;">refactor</span>
           </div>
+
+          <!-- AFTER -->
+          <div style="background:#18181b;border:1px solid rgba(99,102,241,0.4);border-radius:16px;padding:20px;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6ee7b7;margin-bottom:14px;">✅ After</div>
+            <div style="background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(139,92,246,0.15));border:1.5px solid var(--indigo);border-radius:10px;padding:12px 14px;margin-bottom:10px;text-align:center;">
+              <div style="font-size:13px;font-weight:700;color:#a5b4fc;margin-bottom:6px;">📦 shared-ui</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">
+                <span style="background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);border-radius:4px;padding:2px 8px;font-size:11px;color:#c7d2fe;">Button</span>
+                <span style="background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);border-radius:4px;padding:2px 8px;font-size:11px;color:#c7d2fe;">Input</span>
+                <span style="background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);border-radius:4px;padding:2px 8px;font-size:11px;color:#c7d2fe;">Tokens</span>
+                <span style="background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);border-radius:4px;padding:2px 8px;font-size:11px;color:#c7d2fe;">Tests ✓</span>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:center;color:#52525b;font-size:12px;margin-bottom:8px;">↓ install &amp; override token ↓</div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <div style="background:#27272a;border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:13px;font-weight:600;color:#6ee7b7;">Project A</span>
+                <span style="font-size:11px;color:#71717a;">primary: 🔵 blue</span>
+              </div>
+              <div style="background:#27272a;border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:13px;font-weight:600;color:#6ee7b7;">Project B</span>
+                <span style="font-size:11px;color:#71717a;">primary: 🟢 green</span>
+              </div>
+              <div style="background:#27272a;border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:13px;font-weight:600;color:#6ee7b7;">Project C</span>
+                <span style="font-size:11px;color:#71717a;">primary: 🟣 purple</span>
+              </div>
+            </div>
+            <div style="font-size:11px;color:#6ee7b7;text-align:center;margin-top:8px;">bug fix ครั้งเดียว → ทุก Project ✓</div>
+          </div>
+
         </div>
-
-        <p style="margin-top:20px;font-size:13px;color:#71717a;text-align:center;">
-          Bug fix ครั้งเดียว → release version ใหม่ → ทุก Project ได้รับการแก้ไขพร้อมกัน
-        </p>
       </div>
     </div>
 
@@ -720,6 +777,7 @@
   const slides = document.querySelectorAll('.slide');
   const total = slides.length;
   let current = 0;
+  let isAnimating = false;
 
   const progressBar = document.getElementById('progress-bar');
   const counter = document.getElementById('slide-counter');
@@ -748,14 +806,50 @@
   }
 
   function goTo(idx) {
-    if (idx < 0 || idx >= total) return;
-    const prev = slides[current];
-    prev.classList.remove('active');
-    prev.classList.add('exit-left');
-    setTimeout(() => prev.classList.remove('exit-left'), 450);
+    if (idx < 0 || idx >= total || isAnimating) return;
+    isAnimating = true;
+
+    const goingForward = idx > current;
+    const prevSlide = slides[current];
+    const nextSlide = slides[idx];
+
+    // Reset stagger on next slide before animating in
+    nextSlide.classList.remove('animating');
+    // Position next slide off-screen in the right direction
+    if (goingForward) {
+      nextSlide.style.transform = 'translateX(60px)';
+    } else {
+      nextSlide.style.transform = 'translateX(-60px)';
+    }
+
+    // Exit current slide
+    prevSlide.classList.remove('active');
+    if (goingForward) {
+      prevSlide.classList.add('exit-left');
+    } else {
+      // slide out to the right
+      prevSlide.style.transform = 'translateX(60px)';
+      prevSlide.style.opacity = '0';
+    }
+
+    // Enter next slide — force reflow first so transition fires
+    nextSlide.classList.add('active');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        nextSlide.style.transform = '';
+        nextSlide.classList.add('animating');
+      });
+    });
+
     current = idx;
-    slides[current].classList.add('active');
     update();
+
+    setTimeout(() => {
+      prevSlide.classList.remove('exit-left');
+      prevSlide.style.transform = '';
+      prevSlide.style.opacity = '';
+      isAnimating = false;
+    }, 420);
   }
 
   btnPrev.addEventListener('click', () => goTo(current - 1));
@@ -766,7 +860,24 @@
     if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
   });
 
+  // Init first slide
+  slides[0].classList.add('animating');
   update();
+
+  // Exposed for PDF export script
+  window._goToSlide = (idx) => {
+    if (idx < 0 || idx >= total) return;
+    // instant switch — no animation, no lock
+    slides[current].classList.remove('active', 'animating', 'exit-left');
+    slides[current].style.transform = '';
+    slides[current].style.opacity = '';
+    current = idx;
+    slides[current].classList.add('active', 'animating');
+    slides[current].style.transform = '';
+    slides[current].style.opacity = '';
+    isAnimating = false;
+    update();
+  };
 </script>
 </body>
 </html>
